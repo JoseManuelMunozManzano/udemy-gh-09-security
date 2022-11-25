@@ -19,12 +19,22 @@ jobs:
     permissions:
       # Indicando issues a write se indica que se puede escribir en issues, pero no se puede explorar el código
       # del repositorio por ejemplo.
-      issues: write
+      # issues: write
+      # Cambiando el permiso a read
+      issues: read
     runs-on: ubuntu-latest
     steps:
       - name: Assign label
         # Otra forma de evitar inyección de código malicioso con un if
         if: contains(github.event.issue.title, 'bug')
+        # Una cosa importante a añadir es el Token secrets.GITHUB_TOKEN
+        # Este secret no está informado en Settings > Secrets > Actions
+        # De dónde viene entonces?
+        # Es generado automáticamente por GitHub porque para asignar esta petición a la API de GitHub
+        # debemos autenticar la petición. En otro caso cualquier persona podría enviar una petición a la API
+        # para editar o borrar el issue.
+        # Ese token generado por GitHub esta disponible para los jobs de este workflow y solo es válido hasta
+        # que terminan los jobs. El token será eliminado por GitHub una vez el trabajo se ha ejecutado.
         run: |
           curl -X POST \
           --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
