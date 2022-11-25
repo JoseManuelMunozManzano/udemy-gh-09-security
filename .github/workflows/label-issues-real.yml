@@ -19,9 +19,7 @@ jobs:
     permissions:
       # Indicando issues a write se indica que se puede escribir en issues, pero no se puede explorar el código
       # del repositorio por ejemplo.
-      # issues: write
-      # Cambiando el permiso a read el job Assign label falla porque no tiene el permiso adecuado
-      issues: read
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Assign label
@@ -35,6 +33,14 @@ jobs:
         # para editar o borrar el issue.
         # Ese token generado por GitHub esta disponible para los jobs de este workflow y solo es válido hasta
         # que terminan los jobs. El token será eliminado por GitHub una vez el trabajo se ha ejecutado.
+        #
+        # https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+        # En esta página se indican las restricciones de acceso por defecto.
+        # Indicar que en Settings > Actions > General se puede configurar un comportamiento por
+        # defecto más restrictivo que el indicado por defecto en la página web.
+        # Al final de la página está seleccionado Read and write permissions y se puede cambiar a
+        # Read repository contens permission, que es más restrictivo.
+        # Hay también más configuraciones de seguridad que se pueden realizar.
         run: |
           curl -X POST \
           --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
