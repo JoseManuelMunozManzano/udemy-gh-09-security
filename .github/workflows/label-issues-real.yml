@@ -20,7 +20,7 @@ jobs:
       # Indicando issues a write se indica que se puede escribir en issues, pero no se puede explorar el código
       # del repositorio por ejemplo.
       # issues: write
-      # Cambiando el permiso a read
+      # Cambiando el permiso a read el job Assign label falla porque no tiene el permiso adecuado
       issues: read
     runs-on: ubuntu-latest
     steps:
