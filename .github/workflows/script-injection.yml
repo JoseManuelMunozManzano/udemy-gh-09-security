@@ -11,9 +11,15 @@ jobs:
         # En la primera línea se puede inyectar un script.
         # En el ejemplo, se crea un issue con este título
         # a";echo Got your secrets"
+        # Una forma de solucionar este problema sería usar un action (key uses) en vez de utilizar
+        # un comando propio que se ejecuta en el shell
+        # Pero si tenemos que usar nuestro propio comando, es mejor añadir una variable de entorno
+        # con ese código para poder eliminarla de la ejecución en el shell, de esta forma:
+        env:
+          TITLE: ${{ github.event.issue.title }}
+        # Ahora $TITLE es un string, no se le puede inyectar código ejecutable, será un string
         run: |
-          issue_title="${{ github.event.issue.title }}"
-          if [[ "$issue_title" == *"bug"* ]]; then
+          if [[ "$TITLE" == *"bug"* ]]; then
           echo "Issue is about a bug!"
           else
           echo "Issue is not about a bug"
