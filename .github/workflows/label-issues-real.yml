@@ -4,8 +4,21 @@ on:
   issues:
     types:
       - opened
+# También se puede añadir la key permissions a nivel de workflow para que se aplique para todos los jobs
 jobs:
   assign-label:
+    # Este Workflow, que añade el label bug interactua con el API de GitHub, en concreto con el API issues
+    # para editar el label del issue
+    # Ahora mismo este Workflow no indica nada sobre permisos, pero se puede ser más restrictivo, porque
+    # este Workflow realmente solo necesita permisos para interactuar con issues pero no necesita permisos
+    # para interactuar con pull request o cambiar actions.
+    # Con GitHub Actions es muy fácil controlar permisos con la key permissions
+    # https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+    # Aquí permisos a nivel de job
+    permissions:
+      # Indicando issues a write se indica que se puede escribir en issues, pero no se puede explorar el código
+      # del repositorio por ejemplo.
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Assign label
