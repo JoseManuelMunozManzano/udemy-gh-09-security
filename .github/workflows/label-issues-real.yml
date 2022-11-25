@@ -14,7 +14,8 @@ jobs:
     # para interactuar con pull request o cambiar actions.
     # Con GitHub Actions es muy fácil controlar permisos con la key permissions
     # https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
-    # Aquí permisos a nivel de job
+    # Aquí permisos a nivel de job.
+    # Indicar que con estos permisos también estamos más seguros a la hora de evitar inyección de scripts
     permissions:
       # Indicando issues a write se indica que se puede escribir en issues, pero no se puede explorar el código
       # del repositorio por ejemplo.
