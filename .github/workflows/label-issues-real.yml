@@ -1,3 +1,4 @@
+# Configuración de permisos más restrictivos de los que hay por defecto
 name: Label Issues (Permissions Example)
 on:
   issues:
@@ -8,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Assign label
+        # Otra forma de evitar inyección de código malicioso con un if
         if: contains(github.event.issue.title, 'bug')
         run: |
           curl -X POST \
