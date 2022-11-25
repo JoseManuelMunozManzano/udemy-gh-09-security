@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Assign label
+        # En la primera línea se puede inyectar un script.
+        # En el ejemplo, se crea un issue con este título
+        # a";echo Got your secrets"
         run: |
           issue_title="${{ github.event.issue.title }}"
           if [[ "$issue_title" == *"bug"* ]]; then
